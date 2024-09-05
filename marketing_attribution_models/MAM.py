@@ -139,67 +139,67 @@ class MAM:
             del t
             return df_temp
 
-        def random_mam_data_frame(nrows=50000, conv_rate=0.4):
-            """Internal function that creates a random dataframe."""
-            channels = [
-                "Direct",
-                "Direct",
-                "Facebook",
-                "Facebook",
-                "Facebook",
-                "Google Search",
-                "Google Search",
-                "Google Search",
-                "Google Search",
-                "Google Display",
-                "Organic",
-                "Organic",
-                "Organic",
-                "Organic",
-                "Organic",
-                "Organic",
-                "Email Marketing",
-                "Youtube",
-                "Instagram",
+    def random_mam_data_frame(nrows=50000, conv_rate=0.4):
+        """Internal function that creates a random dataframe."""
+        channels = [
+            "Direct",
+            "Direct",
+            "Facebook",
+            "Facebook",
+            "Facebook",
+            "Google Search",
+            "Google Search",
+            "Google Search",
+            "Google Search",
+            "Google Display",
+            "Organic",
+            "Organic",
+            "Organic",
+            "Organic",
+            "Organic",
+            "Organic",
+            "Email Marketing",
+            "Youtube",
+            "Instagram",
+        ]
+        has_transaction = ([True] * int(conv_rate * 100)) + (
+            [False] * int((1 - conv_rate) * 100)
+        )
+        user_id = list(range(0, 700))
+        day = range(1, 29)
+        month = range(1, 12)
+        year = 2020
+        rows = [
+            [
+                random.choices(channels)[0],
+                random.choices(has_transaction)[0],
+                random.choices(user_id)[0],
+                random.choices(day)[0],
+                random.choices(month)[0],
+                year,
             ]
-            has_transaction = ([True] * int(conv_rate * 100)) + (
-                [False] * int((1 - conv_rate) * 100)
-            )
-            user_id = list(range(0, 700))
-            day = range(1, 29)
-            month = range(1, 12)
-            year = 2020
-            rows = [
-                [
-                    random.choices(channels)[0],
-                    random.choices(has_transaction)[0],
-                    random.choices(user_id)[0],
-                    random.choices(day)[0],
-                    random.choices(month)[0],
-                    year,
-                ]
-                for _ in range(nrows)
-            ]
+            for _ in range(nrows)
+        ]
 
-            df = pd.DataFrame(
-                data=rows,
-                columns=[
-                    "channels",
-                    "has_transaction",
-                    "user_id",
-                    "day",
-                    "month",
-                    "year",
-                ],
-            )
-            df["visitStartTime"] = (
-                df["year"].astype(str)
-                + "-"
-                + df["month"].apply(lambda val: str(val) if val > 9 else "0" + str(val))
-                + "-"
-                + df["day"].apply(lambda val: str(val) if val > 9 else "0" + str(val))
-            )
-            return df
+        df = pd.DataFrame(
+            data=rows,
+            columns=[
+                "channels",
+                "has_transaction",
+                "user_id",
+                "day",
+                "month",
+                "year",
+            ],
+        )
+        df["visitStartTime"] = (
+            df["year"].astype(str)
+            + "-"
+            + df["month"].apply(lambda val: str(val) if val > 9 else "0" + str(val))
+            + "-"
+            + df["day"].apply(lambda val: str(val) if val > 9 else "0" + str(val))
+        )
+        return df
 
         #####################################################
         ##### Section 1: Creating object and attributes #####
